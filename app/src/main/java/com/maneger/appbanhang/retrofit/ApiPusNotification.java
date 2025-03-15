@@ -1,0 +1,19 @@
+package com.maneger.appbanhang.retrofit;
+
+import com.maneger.appbanhang.model.MesageData;
+import com.maneger.appbanhang.model.NotiResponse;
+
+import io.reactivex.rxjava3.core.Observable;
+import retrofit2.http.Body;
+import retrofit2.http.Headers;
+import retrofit2.http.POST;
+
+public interface ApiPusNotification {
+    @Headers({
+
+            "Content-Type: application/json",
+            "Authorization: Bearer ya29.c.c0ASRK0GbdqQI5EUKL-_VX3JQmRKviq1hQZvs5y3c93Ykom4Cbgfq-Mdeptzczrl34J0UtCK42-xm7DcoP6dA99E_vs6JwYviiVkkiqp2vKeNRtp-q5xIO4ZjG6hoqsAFNOlm1_4dQkk0g4mksZ3jIiE_LActNhJmDmn7DkbxpQkrouevPYzbXmVbZZTgBcBSatmVl05PEshWAFBQy2wr5oXOGGR8CApjMub7ptePKuOo2zl1VLJmxkAJfi9RFqy5xYlnRQ86MrwjCB8lPfyeh0aSCrYkkMpmiAA8U5kxZBYjGots9QduNUx0bqG2JWYZQs4Z7702IVrR8hHVf1-JmfcgY4ANeb3oO6MI0gnF2jqzOBsCuFjpgUb8AH385P5Oi6rrz2vQhqU4Bu_cVemyxfjVhdznd86BBcxwMjd8hpx8BBng6rna-Umcs_wWxadXOJSw5fdtFnWueQo-zx8m1aofnsfm0Xl3nRg_ScqlS1UW_cpJxVvQ62Oso5xFuiZ___0pnxJkWz60WRqrvUbbwBZkOuwgFyVtJrB52wXvy2iqZ6W7Bttwj8a290rd1O0USer0Y2f2Q-Ug1RhVUhUzS7eRVka-S9cmtBoYlw0eZv4JkBxr9Mu8wiOUhoM0pW701sOMS2JXstQlobdwj_JRY6iSkfuUl-SZ-aFiifqXhWgXoI5kc1YszR7q4YuBBo3nbfkYr5sJvds0yIrkV-Vxjm9R_kObfculXIgxOni3i_kcdWtrkiemibBM7irpZVj7YY2hxwXgejceXIUhMgati7iyZw20Oem7ygJ5Spy8o65UwOO9eY3q1gdUqq7fF0q93o_rlfvnB-6JB1ry3Wkrab4fcRle_kVYanl6pWeSg6zphqoVklR7IijnRym5uB1Rmvx_Fuaj6hyn5moQgqpptxrRMI2qgy8SamftI7m6xRs-Yw6Rl8yl8XqkompZnsd3IolWVaJ4s0j97XIile7BmehlUuUqJZXmbiJS78ugRvtp2abFOaZfStqF"
+    })
+    @POST("projects/appbanhang-f3c5a/messages:send")
+    Observable<NotiResponse> sendNofitication(@Body MesageData data);
+}
