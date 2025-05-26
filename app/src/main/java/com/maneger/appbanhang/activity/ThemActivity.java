@@ -1,5 +1,4 @@
 package com.maneger.appbanhang.activity;
-
 import android.content.Intent;
 import android.database.Cursor;
 import android.net.Uri;
@@ -12,14 +11,12 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Spinner;
 import android.widget.Toast;
-
 import androidx.activity.EdgeToEdge;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
-
 import com.github.dhaval2404.imagepicker.ImagePicker;
 import com.maneger.appbanhang.R;
 import com.maneger.appbanhang.databinding.ActivityThemBinding;
@@ -28,11 +25,9 @@ import com.maneger.appbanhang.model.SanPhamMoi;
 import com.maneger.appbanhang.retrofit.ApiBanHang;
 import com.maneger.appbanhang.retrofit.RetrofitClient;
 import com.maneger.appbanhang.utils.Utils;
-
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
-
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
 import io.reactivex.rxjava3.disposables.CompositeDisposable;
 import io.reactivex.rxjava3.schedulers.Schedulers;
@@ -42,7 +37,6 @@ import okhttp3.RequestBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
-
 public class ThemActivity extends AppCompatActivity {
     Spinner spinner;
     int loai   = 0;
@@ -63,26 +57,20 @@ public class ThemActivity extends AppCompatActivity {
         Intent intent = getIntent();
         sanPhamSua = (SanPhamMoi) intent.getSerializableExtra("Sua");
         if (sanPhamSua == null){
-            //them moi
             flag = false;
         }else {
-            //sua
             flag = true;
             binding.btnthemsp.setText("Sửa sản phẩm");
-            //show data
             binding.motasp.setText(sanPhamSua.getMota());
             binding.giasp.setText(sanPhamSua.getGiasp());
             binding.tensp.setText(sanPhamSua.getTensp());
             binding.hinhanhsp.setText(sanPhamSua.getHinhanh());
             binding.spinnerLoai.setSelection(sanPhamSua.getLoai());
         }
-
     }
-
     private void initView() {
         spinner = findViewById(R.id.spinner_loai);
     }
-
     private void initData() {
         List<String> stringList = new ArrayList<>();
         stringList.add("Vui  lòng  chọn loại");
@@ -91,15 +79,12 @@ public class ThemActivity extends AppCompatActivity {
         ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_dropdown_item, stringList);
         spinner.setAdapter(adapter);
         spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
                 loai = i;
             }
-
             @Override
             public void onNothingSelected(AdapterView<?> adapterView) {
-
             }
         });
         binding.btnthemsp.setOnClickListener(new View.OnClickListener() {
@@ -110,21 +95,19 @@ public class ThemActivity extends AppCompatActivity {
                 }else {
                     suaSanPham();
                 }
-
             }
         });
         binding.imagehinhanh.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 ImagePicker.with(ThemActivity.this)
-                        .crop()                    //Crop image(Optional), Check Customization for more option
-                        .compress(1024)            //Final image size will be less than 1 MB(Optional)
-                        .maxResultSize(1080, 1080)    //Final image resolution will be less than 1080 x 1080(Optional)
+                        .crop()                    
+                        .compress(1024)            
+                        .maxResultSize(1080, 1080)    
                         .start();
             }
         });
     }
-
     private void suaSanPham() {
         String str_tensp = binding.tensp.getText().toString().trim();
         String str_giasp = binding.giasp.getText().toString().trim();
@@ -148,19 +131,16 @@ public class ThemActivity extends AppCompatActivity {
                                 Toast.makeText(getApplicationContext(), throwable.getMessage(), Toast.LENGTH_SHORT).show();
                             }
                     ));
-
         }
-
     }
-
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == 101 && resultCode == RESULT_OK && data != null) {
             Uri fileUri = data.getData();
             if (fileUri != null) {
-                mediaPath = getMediaPath(fileUri); // Chuyển đổi Uri thành đường dẫn thực
-                uploadMultipleFiles(); // Gọi phương thức tải lên tệp
+                mediaPath = getMediaPath(fileUri); 
+                uploadMultipleFiles(); 
                 Log.d("log12", "onActivityResult: " + mediaPath);
             } else {
                 Toast.makeText(getApplicationContext(), "Không tìm thấy hình ảnh", Toast.LENGTH_SHORT).show();
@@ -169,7 +149,6 @@ public class ThemActivity extends AppCompatActivity {
             Toast.makeText(getApplicationContext(), "Không có hình ảnh", Toast.LENGTH_SHORT).show();
         }
     }
-
     private void themsanpham() {
         String str_tensp = binding.tensp.getText().toString().trim();
         String str_giasp = binding.giasp.getText().toString().trim();
@@ -193,7 +172,6 @@ public class ThemActivity extends AppCompatActivity {
                                     Toast.makeText(getApplicationContext(), throwable.getMessage(), Toast.LENGTH_SHORT).show();
                              }
                     ));
-
     }
 }
 private String getMediaPath(Uri uri){
@@ -228,9 +206,7 @@ private void uploadMultipleFiles() {
                 } else {
                     Log.v("Response", serverResponse.toString());
                 }
-
         }
-
         @Override
         public void onFailure(Call<MessageModel> call, Throwable t) {
                 Log.d("log", t.getMessage());

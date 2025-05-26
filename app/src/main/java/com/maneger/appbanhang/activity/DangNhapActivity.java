@@ -1,5 +1,4 @@
 package com.maneger.appbanhang.activity;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -7,12 +6,10 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import androidx.activity.EdgeToEdge;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.AppCompatButton;
-
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
@@ -22,12 +19,10 @@ import com.maneger.appbanhang.R;
 import com.maneger.appbanhang.retrofit.ApiBanHang;
 import com.maneger.appbanhang.retrofit.RetrofitClient;
 import com.maneger.appbanhang.utils.Utils;
-
 import io.paperdb.Paper;
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
 import io.reactivex.rxjava3.disposables.CompositeDisposable;
 import io.reactivex.rxjava3.schedulers.Schedulers;
-
 public class DangNhapActivity extends AppCompatActivity {
     TextView txtdangki;
     EditText email, pass;
@@ -37,7 +32,6 @@ public class DangNhapActivity extends AppCompatActivity {
     ApiBanHang apiBanHang;
     CompositeDisposable compositeDisposable = new CompositeDisposable();
     TextView txtresetpass;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -46,7 +40,6 @@ public class DangNhapActivity extends AppCompatActivity {
         intView();
         intCotroll();
     }
-
     private void intCotroll() {
         txtdangki.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -75,10 +68,8 @@ public class DangNhapActivity extends AppCompatActivity {
                     Paper.book().write("email", tr_email);
                     Paper.book().write("pass", tr_pass);
                     if(user != null){
-                        // user da co dangg nhap firebase
                         dangNhap(tr_email, tr_pass);
                     }else {
-                        //user da singout
                         firebaseAuth.signInWithEmailAndPassword(tr_email, tr_pass)
                                 .addOnCompleteListener(DangNhapActivity.this, new OnCompleteListener<AuthResult>() {
                                     @Override
@@ -89,14 +80,11 @@ public class DangNhapActivity extends AppCompatActivity {
                                     }
                                 });
                     }
-
                 }
             }
         });
     }
-
     private void dangNhap(String tr_email, String tr_pass) {
-
         compositeDisposable.add(apiBanHang.dangnhap(tr_email, tr_pass)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
@@ -104,7 +92,6 @@ public class DangNhapActivity extends AppCompatActivity {
                         userModel -> {
                             if(userModel.isSuccess()){
                                 Utils.user_current = userModel.getResult().get(0);
-                                //luu lai
                                 Paper.book().write("user", userModel.getResult().get(0));
                                 Intent intent = new Intent(getApplicationContext(), MainActivity.class);
                                 startActivity(intent);
@@ -116,7 +103,6 @@ public class DangNhapActivity extends AppCompatActivity {
                         }
                 ));
     }
-
     private void intView() {
         Paper.init(this);
         apiBanHang = RetrofitClient.getInstance(Utils.BASE_URL).create(ApiBanHang.class);
@@ -127,14 +113,11 @@ public class DangNhapActivity extends AppCompatActivity {
         btndangnhap = findViewById(R.id.btndangnhap);
         firebaseAuth = FirebaseAuth.getInstance();
         user = firebaseAuth.getCurrentUser();
-
-        //read data
         if (Paper.book().read("email") != null && Paper.book().read("pass") != null){
             email.setText(Paper.book().read("email"));
             pass.setText(Paper.book().read("pass"));
         }
     }
-
     @Override
     protected void onResume() {
         super.onResume();
@@ -143,7 +126,6 @@ public class DangNhapActivity extends AppCompatActivity {
             pass.setText(Utils.user_current.getPass());
         }
     }
-
     @Override
     protected void onDestroy() {
         compositeDisposable.clear();

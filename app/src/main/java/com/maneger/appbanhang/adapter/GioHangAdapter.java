@@ -1,5 +1,4 @@
 package com.maneger.appbanhang.adapter;
-
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -10,38 +9,30 @@ import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.TextView;
-
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
-
 import com.bumptech.glide.Glide;
 import com.maneger.appbanhang.Interface.ImageClickListener;
 import com.maneger.appbanhang.R;
 import com.maneger.appbanhang.model.EventBus.TinhTongEven;
 import com.maneger.appbanhang.model.GioHang;
 import com.maneger.appbanhang.utils.Utils;
-
 import org.greenrobot.eventbus.EventBus;
-
 import java.text.DecimalFormat;
 import java.util.List;
-
 public class GioHangAdapter extends RecyclerView.Adapter<GioHangAdapter.MyViewHolder> {
     Context context;
     List<GioHang> gioHangList;
-
     public GioHangAdapter(Context context, List<GioHang> giaHangList) {
         this.context = context;
         this.gioHangList = giaHangList;
     }
-
     @NonNull
     @Override
     public MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_giohang, parent, false);
         return new MyViewHolder(view);
     }
-
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
         GioHang gioHang = gioHangList.get(position);
@@ -76,7 +67,6 @@ public class GioHangAdapter extends RecyclerView.Adapter<GioHangAdapter.MyViewHo
                     if (gioHangList.get(pos).getSoluong() > 1){
                         soluongmoi = gioHangList.get(pos).getSoluong() - 1;
                         gioHangList.get(pos).setSoluong(soluongmoi);
-
                         holder.item_giohang_soluong.setText(gioHangList.get(pos).getSoluong()+ " ");
                         Long gia = gioHangList.get(pos).getSoluong() * gioHangList.get(pos).getGiasp();
                         holder.item_giohang_giasp2.setText(decimalFormat.format(gia));
@@ -111,16 +101,13 @@ public class GioHangAdapter extends RecyclerView.Adapter<GioHangAdapter.MyViewHo
                     holder.item_giohang_giasp2.setText(decimalFormat.format(gia));
                     EventBus.getDefault().postSticky(new TinhTongEven());
                 }
-
             }
         });
     }
-
     @Override
     public int getItemCount() {
         return gioHangList.size();
     }
-
     public class MyViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         ImageView item_giohang_image, imgtru, imgcong;
         TextView item_giohang_tensp, item_giohang_gia, item_giohang_soluong, item_giohang_giasp2;
@@ -140,11 +127,9 @@ public class GioHangAdapter extends RecyclerView.Adapter<GioHangAdapter.MyViewHo
             imgcong.setOnClickListener(this);
             imgtru.setOnClickListener(this);
         }
-
         public void setListener(ImageClickListener listener) {
             this.listener = listener;
         }
-
         @Override
         public void onClick(View view) {
             if (view == imgtru){

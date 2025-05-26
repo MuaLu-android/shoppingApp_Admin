@@ -1,31 +1,25 @@
 package com.maneger.appbanhang.activity;
-
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.View;
 import android.widget.Toast;
-
 import androidx.activity.EdgeToEdge;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-
 import com.maneger.appbanhang.R;
 import com.maneger.appbanhang.adapter.DienThoaiAdapter;
 import com.maneger.appbanhang.model.SanPhamMoi;
 import com.maneger.appbanhang.retrofit.ApiBanHang;
 import com.maneger.appbanhang.retrofit.RetrofitClient;
 import com.maneger.appbanhang.utils.Utils;
-
 import java.util.ArrayList;
 import java.util.List;
-
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
 import io.reactivex.rxjava3.disposables.CompositeDisposable;
 import io.reactivex.rxjava3.schedulers.Schedulers;
-
 public class DienThoaiactivity extends AppCompatActivity {
     Toolbar toolbar;
     RecyclerView recyclerView;
@@ -50,15 +44,12 @@ public class DienThoaiactivity extends AppCompatActivity {
         getData(page);
         addEvenload();
         }
-
     private void addEvenload() {
         recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
-
             @Override
             public void onScrollStateChanged(@NonNull RecyclerView recyclerView, int newState) {
                 super.onScrollStateChanged(recyclerView, newState);
             }
-
             @Override
             public void onScrolled(@NonNull RecyclerView recyclerView, int dx, int dy) {
                 super.onScrolled(recyclerView, dx, dy);
@@ -71,7 +62,6 @@ public class DienThoaiactivity extends AppCompatActivity {
             }
         });
     }
-
     private void loadMore() {
         handler.post(new Runnable() {
             @Override
@@ -92,7 +82,6 @@ public class DienThoaiactivity extends AppCompatActivity {
             }
         }, 2000);
     }
-
     private void getData(int page) {
         compositeDisposable.add(apiBanHang.getSanPham(page, loai)
                 .subscribeOn(Schedulers.io())
@@ -112,7 +101,6 @@ public class DienThoaiactivity extends AppCompatActivity {
                                     }
                                     adapter.notifyItemRangeChanged(vitri,soluong);
                                 }
-
                             }else {
                                 Toast.makeText(getApplicationContext(), "Het du lieu", Toast.LENGTH_LONG).show();
                                 isloading = true;
@@ -123,7 +111,6 @@ public class DienThoaiactivity extends AppCompatActivity {
                         }
                 ));
     }
-
     private void ActoinToolBar() {
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -133,9 +120,7 @@ public class DienThoaiactivity extends AppCompatActivity {
                 finish();
             }
         });
-
     }
-
     private void AnhXa() {
         toolbar = findViewById(R.id.toolbar);
         recyclerView = findViewById(R.id.recycerview_dt);
@@ -144,7 +129,6 @@ public class DienThoaiactivity extends AppCompatActivity {
         recyclerView.setHasFixedSize(true);
         sanPhamMoilist = new ArrayList<>();
     }
-
     @Override
     protected void onDestroy() {
         compositeDisposable.clear();

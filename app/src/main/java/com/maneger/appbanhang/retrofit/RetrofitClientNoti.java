@@ -1,10 +1,8 @@
 package com.maneger.appbanhang.retrofit;
-
 import okhttp3.OkHttpClient;
 import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava3.RxJava3CallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;
-
 public class RetrofitClientNoti {
     private static Retrofit instance;
     public static Retrofit getInstance(OkHttpClient client){

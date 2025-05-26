@@ -1,29 +1,22 @@
 package com.maneger.appbanhang.retrofit;
-
-
 import com.maneger.appbanhang.model.DonhangModels;
 import com.maneger.appbanhang.model.LoaiSpModel;
 import com.maneger.appbanhang.model.MessageModel;
 import com.maneger.appbanhang.model.SanPhamMoiModel;
 import com.maneger.appbanhang.model.UserModel;
-
 import io.reactivex.rxjava3.core.Observable;
 import okhttp3.MultipartBody;
-import okhttp3.RequestBody;
 import retrofit2.Call;
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
 import retrofit2.http.POST;
 import retrofit2.http.Part;
-
 public interface ApiBanHang {
     @GET("getloaisp1.php")
     Observable<LoaiSpModel> getLoaiSp();
-
     @GET("getspmoi1.php")
     Observable<SanPhamMoiModel> getSpMoi();
-
     @POST("chitiet1.php")
     @FormUrlEncoded
     Observable<SanPhamMoiModel> getSanPham(

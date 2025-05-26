@@ -1,5 +1,4 @@
 package com.maneger.appbanhang.activity;
-
 import android.content.Context;
 import android.content.Intent;
 import android.net.ConnectivityManager;
@@ -17,7 +16,6 @@ import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.Toast;
 import android.widget.ViewFlipper;
-
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
@@ -25,7 +23,6 @@ import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-
 import com.bumptech.glide.Glide;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
@@ -42,18 +39,14 @@ import com.maneger.appbanhang.utils.AccesToken;
 import com.maneger.appbanhang.utils.Utils;
 import com.google.android.material.navigation.NavigationView;
 import com.nex3z.notificationbadge.NotificationBadge;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
-
 import io.paperdb.Paper;
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
 import io.reactivex.rxjava3.disposables.CompositeDisposable;
 import io.reactivex.rxjava3.schedulers.Schedulers;
-
-
 public class MainActivity extends AppCompatActivity {
     Toolbar toolbar;
     ViewFlipper viewFlipper;
@@ -76,7 +69,6 @@ public class MainActivity extends AppCompatActivity {
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_main);
         apiBanHang = RetrofitClient.getInstance(Utils.BASE_URL).create(ApiBanHang.class);
-
         Paper.init(this);
         initAccesToken();
         if (Paper.book("user") != null){
@@ -87,17 +79,14 @@ public class MainActivity extends AppCompatActivity {
         AnhXa();
         Actionbar();
         if (isConnected(this)){
-
             ActionViewFlipper();
             getLoaiSanPham();
             getSpMoi();
             getEventClick();
-
         }else {
             Toast.makeText(getApplicationContext(), "Không có internet, vui lòng kết nô lại", Toast.LENGTH_LONG).show();
         }
     }
-
     private void initAccesToken() {
         ExecutorService executorService = Executors.newSingleThreadExecutor();
         executorService.execute(new Runnable() {
@@ -115,7 +104,6 @@ public class MainActivity extends AppCompatActivity {
             }
         });
     }
-
     private void getToken() {
         FirebaseMessaging.getInstance().getToken()
                 .addOnSuccessListener(new OnSuccessListener<String>() {
@@ -127,7 +115,6 @@ public class MainActivity extends AppCompatActivity {
                                     .observeOn(AndroidSchedulers.mainThread())
                                     .subscribe(
                                             messageModel -> {
-
                                             }, throwable -> {
                                                 Log.d("log", throwable.getMessage());
                                             }
@@ -136,7 +123,6 @@ public class MainActivity extends AppCompatActivity {
                     }
                 });
     }
-
     private void getEventClick() {
         listViewManHinhChinh.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -160,7 +146,6 @@ public class MainActivity extends AppCompatActivity {
                         Intent donhang = new Intent(getApplicationContext(), XemdonActivity.class);
                         startActivity(donhang);
                         break;
-
                     case 4:
                         Intent quanli = new Intent(getApplicationContext(), QuanLiActivity.class);
                         startActivity(quanli);
@@ -177,7 +162,6 @@ public class MainActivity extends AppCompatActivity {
             }
         });
     }
-
     private void getSpMoi() {
         compositeDisposable.add(apiBanHang.getSpMoi()
                 .subscribeOn(Schedulers.io())
@@ -195,7 +179,6 @@ public class MainActivity extends AppCompatActivity {
                         }
                 ));
     }
-
     private void Actionbar() {
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -207,7 +190,6 @@ public class MainActivity extends AppCompatActivity {
             }
         });
     }
-
     private void getLoaiSanPham() {
         compositeDisposable.add(apiBanHang.getLoaiSp()
                 .subscribeOn(Schedulers.io())
@@ -233,9 +215,7 @@ public class MainActivity extends AppCompatActivity {
                                 Toast.makeText(getApplicationContext(), "Có lỗi xảy ra: " + throwable.getMessage(), Toast.LENGTH_LONG).show();
                             }
                 ));
-
     }
-
     private void ActionViewFlipper() {
         List<String> manquangcao = new ArrayList<>();
         manquangcao.add("https://laulu.io.vn/banhang/images/slip_1.jpg");
@@ -255,8 +235,6 @@ public class MainActivity extends AppCompatActivity {
         viewFlipper.setInAnimation(slide_in);
         viewFlipper.setOutAnimation(slide_out);
     }
-
-
     private void AnhXa() {
         imagsearch = findViewById(R.id.imgsearch);
         toolbar = findViewById(R.id.toolbarmanhinhchinh);
@@ -298,7 +276,6 @@ public class MainActivity extends AppCompatActivity {
             }
         });
     }
-
     @Override
     protected void onResume() {
         super.onResume();
@@ -308,16 +285,13 @@ public class MainActivity extends AppCompatActivity {
         }
         badge.setText(String.valueOf(totalItem));
     }
-
     private boolean isConnected (Context context){
         ConnectivityManager connectivityManager = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
         Network activeNetwork = connectivityManager.getActiveNetwork();
         NetworkCapabilities networkCapabilities = connectivityManager.getNetworkCapabilities(activeNetwork);
-
         if (networkCapabilities != null) {
             boolean isWiFi = networkCapabilities.hasTransport(NetworkCapabilities.TRANSPORT_WIFI);
             boolean isMobile = networkCapabilities.hasTransport(NetworkCapabilities.TRANSPORT_CELLULAR);
-
             if (isWiFi || isMobile) {
                 return true;
             } else {
@@ -327,7 +301,6 @@ public class MainActivity extends AppCompatActivity {
             return false;
         }
     }
-
     @Override
     protected void onDestroy() {
         compositeDisposable.clear();

@@ -1,5 +1,4 @@
 package com.maneger.appbanhang.activity;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.StrictMode;
@@ -9,27 +8,21 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import androidx.appcompat.widget.AppCompatButton;
 import androidx.appcompat.widget.Toolbar;
-
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
-
 import com.maneger.appbanhang.R;
 import com.maneger.appbanhang.retrofit.ApiBanHang;
 import com.maneger.appbanhang.retrofit.RetrofitClient;
 import com.maneger.appbanhang.utils.Utils;
 import com.google.gson.Gson;
-
 import java.text.DecimalFormat;
-
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
 import io.reactivex.rxjava3.disposables.CompositeDisposable;
 import io.reactivex.rxjava3.schedulers.Schedulers;
 import vn.zalopay.sdk.Environment;
 import vn.zalopay.sdk.ZaloPaySDK;
-
 public class ThanhToanActivity extends AppCompatActivity {
     Toolbar toolbar;
     TextView txttongtien, txtsdt, txtemail;
@@ -39,30 +32,24 @@ public class ThanhToanActivity extends AppCompatActivity {
     ApiBanHang apiBanHang;
     long tongtien;
     int  totalItem;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_thanh_toan);
-        //thanh toán zalopay
         StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
         StrictMode.setThreadPolicy(policy);
-
-        // ZaloPay SDK Init
         ZaloPaySDK.init(2553, Environment.SANDBOX);
         initView();
         coutItem();
         initControl();
     }
-
     private void coutItem() {
         totalItem = 0;
         for(int i=0; i<Utils.mangmuahang.size(); i++){
             totalItem = totalItem + Utils.mangmuahang.get(i).getSoluong();
         }
     }
-
     private void initView() {
         apiBanHang = RetrofitClient.getInstance(Utils.BASE_URL).create(ApiBanHang.class);
         toolbar = findViewById(R.id.toolbar1);
@@ -73,7 +60,6 @@ public class ThanhToanActivity extends AppCompatActivity {
         btndathang = findViewById(R.id.btndathang);
         btnzalopay = findViewById(R.id.btnzalopay);
     }
-
     private void initControl() {
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -123,5 +109,4 @@ public class ThanhToanActivity extends AppCompatActivity {
         compositeDisposable.clear();
         super.onDestroy();
     }
-
 }

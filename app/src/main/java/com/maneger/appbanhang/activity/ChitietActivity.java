@@ -1,5 +1,4 @@
 package com.maneger.appbanhang.activity;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -9,7 +8,6 @@ import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
-
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
@@ -19,7 +17,6 @@ import com.maneger.appbanhang.model.GioHang;
 import com.maneger.appbanhang.model.SanPhamMoi;
 import com.maneger.appbanhang.utils.Utils;
 import com.nex3z.notificationbadge.NotificationBadge;
-
 public class ChitietActivity extends AppCompatActivity {
     TextView tensp, giasp, mota;
     Button btnthem;
@@ -29,8 +26,6 @@ public class ChitietActivity extends AppCompatActivity {
     SanPhamMoi sanPhamMoi;
     NotificationBadge badge;
     FrameLayout frameLayout;
-
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -41,7 +36,6 @@ public class ChitietActivity extends AppCompatActivity {
         initData();
         initControl();
     }
-
     private void initControl() {
         btnthem.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -50,7 +44,6 @@ public class ChitietActivity extends AppCompatActivity {
             }
         });
     }
-
     private void themGioHang() {
         if(Utils.manggiohang.size() >0){
             boolean flag = false;
@@ -73,7 +66,6 @@ public class ChitietActivity extends AppCompatActivity {
                 gioHang.setHinhsp(sanPhamMoi.getHinhanh());
                 Utils.manggiohang.add(gioHang);
             }
-
         }else {
             int soluong = Integer.parseInt(spinner.getSelectedItem().toString());
             long gia = Long.parseLong(sanPhamMoi.getGiasp().replace(".", "")) * soluong;
@@ -91,7 +83,6 @@ public class ChitietActivity extends AppCompatActivity {
         }
         badge.setText(String.valueOf(totalItem));
     }
-
     private void initData() {
         sanPhamMoi = (SanPhamMoi) getIntent().getSerializableExtra("chitiet");
         tensp.setText(sanPhamMoi.getTensp());
@@ -101,9 +92,7 @@ public class ChitietActivity extends AppCompatActivity {
         Integer[] so = new Integer[]{1, 2, 3, 4, 5, 6, 8, 9, 10};
         ArrayAdapter<Integer> adapterpin = new ArrayAdapter<>(this, androidx.appcompat.R.layout.support_simple_spinner_dropdown_item, so);
         spinner.setAdapter(adapterpin);
-
     }
-
     private void initView() {
         tensp = findViewById(R.id.txttensp);
         giasp = findViewById(R.id.txtgiasp);
@@ -135,13 +124,10 @@ public class ChitietActivity extends AppCompatActivity {
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
                 finish();
             }
         });
-
     }
-
     @Override
     protected void onResume() {
         super.onResume();

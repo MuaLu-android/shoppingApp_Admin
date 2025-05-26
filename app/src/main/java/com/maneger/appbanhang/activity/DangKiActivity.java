@@ -1,5 +1,4 @@
 package com.maneger.appbanhang.activity;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -7,11 +6,9 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
-
 import androidx.activity.EdgeToEdge;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
@@ -21,18 +18,15 @@ import com.maneger.appbanhang.R;
 import com.maneger.appbanhang.retrofit.ApiBanHang;
 import com.maneger.appbanhang.retrofit.RetrofitClient;
 import com.maneger.appbanhang.utils.Utils;
-
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
 import io.reactivex.rxjava3.disposables.CompositeDisposable;
 import io.reactivex.rxjava3.schedulers.Schedulers;
-
 public class DangKiActivity extends AppCompatActivity {
     EditText email, pass, repass, username, mobile;
     Button btndangki;
     ApiBanHang apiBanHang;
     FirebaseAuth firebaseAuth;
     CompositeDisposable compositeDisposable = new CompositeDisposable();
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -41,7 +35,6 @@ public class DangKiActivity extends AppCompatActivity {
         intView();
         intControll();
     }
-
     private void intControll() {
         btndangki.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -50,7 +43,6 @@ public class DangKiActivity extends AppCompatActivity {
             }
         });
     }
-
     private void dangki() {
         String tr_email = email.getText().toString().trim();
         String tr_pass = pass.getText().toString().trim();
@@ -89,9 +81,7 @@ public class DangKiActivity extends AppCompatActivity {
             }
         }
     }
-
     private void postData(String tr_email, String tr_pass, String tr_username, String tr_mobile, String uid) {
-        //post data
         compositeDisposable.add(apiBanHang.dangki(tr_email, tr_pass, tr_username, tr_mobile, uid)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
@@ -113,8 +103,6 @@ public class DangKiActivity extends AppCompatActivity {
                         }
                 ));
     }
-
-
     private void intView() {
         apiBanHang = RetrofitClient.getInstance(Utils.BASE_URL).create(ApiBanHang.class);
         email = findViewById(R.id.email);
@@ -124,8 +112,6 @@ public class DangKiActivity extends AppCompatActivity {
         username = findViewById(R.id.username);
         btndangki = findViewById(R.id.btndangki);
     }
-
-
     @Override
     protected void onDestroy() {
         compositeDisposable.clear();

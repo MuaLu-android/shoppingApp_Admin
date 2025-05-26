@@ -1,5 +1,4 @@
 package com.maneger.appbanhang.utils;
-
 public class AppInfo {
     public static final int APP_ID = 2553;
     public static final String MAC_KEY = "PcY4iZIKFCIdgZvA6ueMcMHHUbRLYjPL";

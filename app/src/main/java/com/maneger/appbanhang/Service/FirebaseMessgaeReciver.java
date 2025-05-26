@@ -1,28 +1,22 @@
 package com.maneger.appbanhang.Service;
-
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Intent;
 import android.widget.RemoteViews;
-
 import androidx.annotation.NonNull;
 import androidx.core.app.NotificationCompat;
-
 import com.google.firebase.messaging.FirebaseMessagingService;
 import com.google.firebase.messaging.RemoteMessage;
 import com.maneger.appbanhang.R;
 import com.maneger.appbanhang.activity.MainActivity;
-
 public class FirebaseMessgaeReciver extends FirebaseMessagingService {
-
     @Override
     public void onMessageReceived(@NonNull RemoteMessage message) {
         if (message.getNotification() != null){
             showNotification(message.getNotification().getTitle(), message.getNotification().getBody());
         }
     }
-
     private void showNotification(String title, String body) {
         Intent intent = new Intent(this, MainActivity.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
@@ -42,13 +36,11 @@ public class FirebaseMessgaeReciver extends FirebaseMessagingService {
         }
             notificationManager.notify(0, builder.build());
     }
-
     private RemoteViews customView(String title, String body){
         RemoteViews remoteViews = new RemoteViews(getApplicationContext().getPackageName(), R.layout.notification);
         remoteViews.setTextViewText(R.id.tile_noti,title);
         remoteViews.setTextViewText(R.id.dody_noti, body);
         remoteViews.setImageViewResource(R.id.imgnoti, R.drawable.ic_user_24);
         return remoteViews;
-
     }
 }

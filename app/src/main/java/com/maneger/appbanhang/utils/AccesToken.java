@@ -1,12 +1,9 @@
 package com.maneger.appbanhang.utils;
 import android.util.Log;
-
 import com.google.auth.oauth2.GoogleCredentials;
-
 import java.io.ByteArrayInputStream;
 import java.io.InputStream;
 import java.nio.charset.StandardCharsets;
-
 public class AccesToken {
     private static final String firebaseMessagingScope = "https://www.googleapis.com/auth/firebase.messaging";
     public String getAccesToken(){
